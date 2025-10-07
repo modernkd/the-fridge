@@ -23,7 +23,7 @@ export default function MoreCowbellHome() {
       <MetaTags
         title="More Cowbell"
         description="Real-time collaborative emoji sound board app. Join a room and play sounds together with others in real-time using PartyKit."
-        image="/fridge-screenshot.webp"
+        image="/room-screenshot.webp"
         url="/more-cowbell"
       />
       <PageContainer>
