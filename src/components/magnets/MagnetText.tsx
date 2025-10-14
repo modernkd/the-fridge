@@ -9,7 +9,7 @@ interface MagnetHeadingProps {
 
 export default function MagnetText({ text, size = 'large', onLetterClick }: MagnetHeadingProps) {
   // Define colors for each letter position
-  const colors = ['#f6a746', '#00B9ED', '#ED5053', '#00AF4F', '#8E509F', '#F9DE00', '#f6a746'];
+  const colors = ['#000000', '#00B9ED', '#ED5053', '#00AF4F', '#8E509F', '#F9DE00', '#000000'];
 
   return (
     <div className={`${styles.magnetHeading} ${styles[size]}`}>

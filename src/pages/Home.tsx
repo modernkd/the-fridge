@@ -64,7 +64,7 @@ export default function Portfolio() {
 
                 <pre className={styles.codeBlock}>
                   <code>
-                    {`// The Developer's Infinite Loop
+                    {`// The Developer's Loop
 async function developerLife() {
   try {
     while (true) {
