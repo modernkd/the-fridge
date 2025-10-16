@@ -11,6 +11,8 @@ interface HeaderProps {
   linkTo?: string;
   linkText?: string;
   showBackLink?: boolean;
+  showSignOut?: boolean;
+  onSignOut?: () => void;
 }
 
 export default function Header({
@@ -20,6 +22,8 @@ export default function Header({
   linkTo = '/',
   linkText,
   showBackLink = true,
+  showSignOut = false,
+  onSignOut,
 }: HeaderProps) {
   const { t } = useTranslation();
 
@@ -36,11 +40,16 @@ export default function Header({
             </Link>
           )}
         </span>
-        {showDarkModeToggle && onDarkModeToggle && (
-          <div className={styles.darkModeToggleContainer}>
+        <div className={styles.headerActions}>
+          {showSignOut && onSignOut && (
+            <button onClick={onSignOut} className={styles.signOutButton}>
+              Sign Out
+            </button>
+          )}
+          {showDarkModeToggle && onDarkModeToggle && (
             <DarkModeToggle isDarkMode={isDarkMode} onToggle={onDarkModeToggle} />
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </header>
   );

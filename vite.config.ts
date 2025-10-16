@@ -34,7 +34,6 @@ export default defineConfig({
             }
             if (id.includes('howler')) return 'sounds';
             if (id.includes('partysocket')) return 'partykit';
-            if (id.includes('@emailjs')) return 'email';
             if (id.includes('emoji-picker')) return 'emoji';
           }
         },

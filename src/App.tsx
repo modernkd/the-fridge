@@ -10,6 +10,7 @@ const MoreCowbellLayout = lazy(() => import('./pages/more-cowbell/Layout'));
 // Pages
 const Home = lazy(() => import('./pages/Home'));
 const Fridge = lazy(() => import('./pages/Fridge'));
+const Admin = lazy(() => import('./pages/Admin'));
 const MoreCowbellHome = lazy(() => import('./pages/more-cowbell/Home'));
 const RoomPage = lazy(() => import('./pages/more-cowbell/room/RoomPage'));
 
@@ -23,6 +24,10 @@ function App() {
 
         <Route path="/fridge" element={<Layout />}>
           <Route index element={<Fridge />} />
+        </Route>
+
+        <Route path="/admin" element={<Layout />}>
+          <Route index element={<Admin />} />
         </Route>
 
         <Route path="/more-cowbell" element={<MoreCowbellLayout />}>

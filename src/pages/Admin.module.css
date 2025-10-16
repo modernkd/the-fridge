@@ -1,0 +1,280 @@
+.adminContainer {
+  min-height: calc(100vh - 120px);
+  margin-top: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+  background: var(--fridge-bg-primary, #fff4e6);
+}
+
+.loginForm {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.loginForm h1 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.loginForm p {
+  margin-bottom: 1.5rem;
+  color: #666;
+}
+
+.emailInput {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.loginButton {
+  width: 100%;
+  padding: 0.75rem;
+  background: #f57b34;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.loginButton:hover:not(:disabled) {
+  background: #e56a2a;
+}
+
+.loginButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.adminPanel {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  width: 100%;
+}
+
+.adminPanel h1 {
+  margin-bottom: 2rem;
+  color: #333;
+  text-align: center;
+}
+
+.notesTableContainer {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: white;
+  position: relative;
+}
+
+.notesTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.notesTable th,
+.notesTable td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.notesTable th {
+  background: #f8f9fa;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+}
+
+.notesTable tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.titleCell {
+  max-width: 200px;
+  word-wrap: break-word;
+}
+
+.actionsCell {
+  position: relative;
+  text-wrap: nowrap;
+}
+
+.dropdown {
+  position: static;
+  display: inline-block;
+}
+
+.dropdownTrigger {
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dropdownTrigger:hover {
+  background: #e5e7eb;
+}
+
+.dropdownMenu {
+  position: fixed;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  min-width: 120px;
+}
+
+.dropdownItem {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background 0.2s;
+}
+
+.dropdownItem:hover {
+  background: #f3f4f6;
+}
+
+.deleteItem {
+  color: #dc2626;
+}
+
+.deleteItem:hover {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.noteStatus {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+.status-pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-approved {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.status-rejected {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.noteActions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.approveButton,
+.rejectButton,
+.deleteButton {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.approveButton {
+  background: #10b981;
+  color: white;
+}
+
+.approveButton:hover {
+  background: #059669;
+}
+
+.rejectButton {
+  background: #ef4444;
+  color: white;
+}
+
+.rejectButton:hover {
+  background: #dc2626;
+}
+
+.deleteButton {
+  background: #6b7280;
+  color: white;
+}
+
+.deleteButton:hover {
+  background: #4b5563;
+}
+
+/* Dark mode styles */
+[data-theme='dark'] .adminContainer {
+  background: #1f2937;
+}
+
+[data-theme='dark'] .loginForm,
+[data-theme='dark'] .adminPanel {
+  background: #374151;
+  color: #f9fafb;
+}
+
+[data-theme='dark'] .loginForm h1,
+[data-theme='dark'] .adminPanel h1,
+[data-theme='dark'] .noteHeader h3 {
+  color: #f9fafb;
+}
+
+[data-theme='dark'] .loginForm p {
+  color: #d1d5db;
+}
+
+[data-theme='dark'] .emailInput {
+  background: #4b5563;
+  border-color: #6b7280;
+  color: #f9fafb;
+}
+
+[data-theme='dark'] .noteItem {
+  background: #4b5563;
+  border-color: #6b7280;
+}
+
+[data-theme='dark'] .noteMeta {
+  color: #9ca3af;
+}
+
+[data-theme='dark'] .noteMessage {
+  background: #374151;
+  border-color: #4b5563;
+  color: #f9fafb;
+}

@@ -1,0 +1,141 @@
+.stickyNotesContainer {
+  top: 20px;
+  right: 20px;
+  width: 200px;
+  z-index: 10;
+}
+
+.stickyNote {
+  background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 100%);
+  border: 2px solid #f59e0b;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  transform: rotate(-2deg);
+  position: relative;
+}
+
+.stickyNote::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 20px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 100%);
+  border: 2px solid #f59e0b;
+  border-bottom: none;
+  border-radius: 50% 50% 0 0;
+}
+
+.dark .stickyNote {
+  background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+  border-color: #6b7280;
+  color: #f9fafb;
+}
+
+.dark .stickyNote::before {
+  background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+  border-color: #6b7280;
+}
+
+.noteHeader {
+  margin-bottom: 10px;
+}
+
+.noteTitle {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0 0 5px 0;
+  color: #92400e;
+}
+
+.dark .noteTitle {
+  color: #fbbf24;
+}
+
+.noteAuthor {
+  font-size: 12px;
+  color: #a16207;
+  font-style: italic;
+}
+
+.dark .noteAuthor {
+  color: #d97706;
+}
+
+.noteMessage {
+  font-size: 13px;
+  line-height: 1.4;
+  margin-bottom: 8px;
+  color: #78350f;
+  word-wrap: break-word;
+}
+
+.dark .noteMessage {
+  color: #e5e7eb;
+}
+
+.noteDate {
+  font-size: 11px;
+  color: #92400e;
+  text-align: right;
+  border-top: 1px solid #f59e0b;
+  padding-top: 5px;
+}
+
+.dark .noteDate {
+  color: #9ca3af;
+  border-color: #6b7280;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.navButton {
+  background: #f59e0b;
+  border: 2px solid #d97706;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  color: #92400e;
+  transition: all 0.2s ease;
+}
+
+.navButton:hover {
+  background: #d97706;
+  transform: scale(1.1);
+}
+
+.dark .navButton {
+  background: #6b7280;
+  border-color: #4b5563;
+  color: #f9fafb;
+}
+
+.dark .navButton:hover {
+  background: #4b5563;
+}
+
+.noteCounter {
+  font-size: 12px;
+  font-weight: bold;
+  color: #92400e;
+}
+
+.dark .noteCounter {
+  color: #fbbf24;
+}

@@ -67,5 +67,22 @@
   "customSoundAddedOffline": "Added custom sound {{emoji}} locally",
   "customSoundUpdatedOffline": "Updated custom sound {{emoji}} locally",
   "customSoundDeletedOffline": "Deleted custom sound {{emoji}} locally",
-  "welcome": "Welcome"
+  "welcome": "Welcome",
+  "adminLoginTitle": "Admin Login",
+  "adminLoginDescription": "Click to receive a magic link for admin access",
+  "adminSendingButton": "Sending...",
+  "adminSendButton": "Send Magic Link",
+  "adminNoteManagementTitle": "Note Management",
+  "adminFromLabel": "From:",
+  "adminApproveButton": "Approve",
+  "adminRejectButton": "Reject",
+  "adminDeleteButton": "Delete",
+  "adminTableTitle": "Title",
+  "adminTableName": "Name",
+  "adminTableEmail": "Email",
+  "adminTableStatus": "Status",
+  "adminTableDate": "Date",
+  "adminTableActions": "Actions",
+  "adminActionsButton": "Actions",
+  "adminArchiveButton": "Archive"
 }

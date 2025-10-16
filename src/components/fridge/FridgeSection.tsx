@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import MagnetText from '../magnets/MagnetText';
 import FamilyWhiteboard from './FamilyWhiteboard';
+import StickyNotes from './StickyNotes';
 import styles from './FridgeSection.module.css';
 import { useTranslation } from 'react-i18next';
 import { soundMap } from '../../lib/soundMap';
@@ -180,6 +181,7 @@ export default function FridgeSection({
           <div className={styles.magnetTextContainer}>
             <MagnetText text={t('fridgeMainText')} size="medium" />
           </div>
+          <StickyNotes isDarkMode={isDarkMode} />
           <div className={`${styles.stickyNoteContainer} ${isFormOpen ? styles.hidden : ''}`}>
             <div onClick={handleNoteTaking} className={styles.stickyNote}>
               <div>{t('stickyNoteText')}</div>

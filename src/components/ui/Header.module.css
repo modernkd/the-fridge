@@ -75,10 +75,25 @@
   }
 }
 
-.darkModeToggleContainer {
+.headerActions {
   display: flex;
   align-items: center;
-  margin-left: 1rem;
+  gap: 1rem;
+}
+
+.signOutButton {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.signOutButton:hover {
+  background: var(--accent-hover);
 }
 /* Dark theme styles - consolidated */
 [data-theme='dark'] .siteTitle {

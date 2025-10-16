@@ -67,5 +67,13 @@
   "customSoundAddedOffline": "Lade till anpassat ljud {{emoji}} lokalt",
   "customSoundUpdatedOffline": "Uppdaterade anpassat ljud {{emoji}} lokalt",
   "customSoundDeletedOffline": "Tog bort anpassat ljud {{emoji}} lokalt",
-  "welcome": "Välkommen"
+  "welcome": "Välkommen",
+  "adminLoginTitle": "Admin-inloggning",
+  "adminLoginDescription": "Klicka för att få en magisk länk för admin-åtkomst",
+  "adminSendingButton": "Skickar...",
+  "adminSendButton": "Skicka magisk länk",
+  "adminNoteManagementTitle": "Lapp-hantering",
+  "adminFromLabel": "Från:",
+  "adminApproveButton": "Godkänn",
+  "adminRejectButton": "Avvisa"
 }

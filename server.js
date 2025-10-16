@@ -1,12 +1,53 @@
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
+import { db } from './src/db/index.js';
+import { notes } from './src/db/schema.js';
+import { getPendingNotes, getApprovedNotes, approveNote, rejectNote } from './src/db/auth.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Serve static files
+// Middleware
+app.use(express.json());
 app.use(express.static(path.resolve('dist')));
+
+// API Routes
+app.post('/api/notes', async (req, res) => {
+  try {
+    const { name, email, title, message } = req.body;
+
+    if (!name || !email || !title || !message) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    const newNote = await db
+      .insert(notes)
+      .values({
+        name,
+        email,
+        title,
+        message,
+        status: 'pending',
+      })
+      .returning();
+
+    res.status(201).json({ success: true, note: newNote[0] });
+  } catch (error) {
+    console.error('Error creating note:', error);
+    res.status(500).json({ error: 'Failed to create note' });
+  }
+});
+
+app.get('/api/notes/approved', async (req, res) => {
+  try {
+    const approvedNotes = await getApprovedNotes();
+    res.json(approvedNotes);
+  } catch (error) {
+    console.error('Error fetching approved notes:', error);
+    res.status(500).json({ error: 'Failed to fetch notes' });
+  }
+});
 
 // Static meta tag injection for different pages
 const pageMeta = {
@@ -76,6 +117,16 @@ app.get('/more-cowbell/room/:room', (req, res) => {
     description:
       'Real-time collaborative emoji sound board. Play sounds together with others in this room using PartyKit.',
     image: 'https://kd.works/room-screenshot.webp',
+  };
+  handleMetaPage(req, res, meta);
+});
+
+// Handle admin page
+app.get('/admin', (req, res) => {
+  const meta = {
+    title: 'Admin | kd davis',
+    description: 'Admin panel for managing fridge notes',
+    image: 'https://kd.works/fridge-screenshot.webp',
   };
   handleMetaPage(req, res, meta);
 });

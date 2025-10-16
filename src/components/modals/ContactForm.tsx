@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import emailjs from '@emailjs/browser';
 import styles from './ContactForm.module.css';
+import { supabase } from '../../lib/supabase';
 
 interface ContactFormProps {
   isVisible: boolean;
@@ -19,23 +19,29 @@ export default function ContactForm({ isVisible, onClose }: ContactFormProps) {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [isSupabaseConnected, setIsSupabaseConnected] = useState(true);
   const { t } = useTranslation();
 
   const processQueuedSubmissions = useCallback(async () => {
     const queued = JSON.parse(localStorage.getItem(QUEUED_SUBMISSIONS_KEY) || '[]');
     if (queued.length === 0) return;
 
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
-    if (!serviceId || !templateId || !publicKey) return;
-
     const remaining = [];
     for (const submission of queued) {
       try {
-        await emailjs.send(serviceId, templateId, submission, publicKey);
-        // Success, don't add to remaining
+        const response = await fetch('/api/notes', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(submission),
+        });
+
+        if (response.ok) {
+          // Success, don't add to remaining
+        } else {
+          remaining.push(submission);
+        }
       } catch (error) {
         console.error('Failed to send queued submission:', error);
         remaining.push(submission);
@@ -62,12 +68,25 @@ export default function ContactForm({ isVisible, onClose }: ContactFormProps) {
     };
   }, []);
 
+  // Check Supabase connection on mount
+  useEffect(() => {
+    const checkConnection = async () => {
+      try {
+        const { error } = await supabase.from('notes').select('id').limit(1);
+        setIsSupabaseConnected(!error);
+      } catch {
+        setIsSupabaseConnected(false);
+      }
+    };
+    checkConnection();
+  }, []);
+
   // Process queued submissions when coming online
   useEffect(() => {
-    if (isOnline) {
+    if (isOnline && isSupabaseConnected) {
       processQueuedSubmissions();
     }
-  }, [isOnline, processQueuedSubmissions]);
+  }, [isOnline, isSupabaseConnected, processQueuedSubmissions]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -77,23 +96,6 @@ export default function ContactForm({ isVisible, onClose }: ContactFormProps) {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Check if we're on the client side and emailjs is available
-    if (typeof window === 'undefined' || !emailjs) {
-      alert(t('contactConfigErrorMessage'));
-      setIsSubmitting(false);
-      return;
-    }
-
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
-    if (!serviceId || !templateId || !publicKey) {
-      alert(t('contactConfigErrorMessage'));
-      setIsSubmitting(false);
-      return;
-    }
-
     const submissionData = {
       name: formData.name,
       email: formData.email,
@@ -101,29 +103,36 @@ export default function ContactForm({ isVisible, onClose }: ContactFormProps) {
       title: formData.title || 'No Title',
     };
 
-    if (!isOnline) {
-      // Queue for later
-      const queued = JSON.parse(localStorage.getItem(QUEUED_SUBMISSIONS_KEY) || '[]');
-      queued.push(submissionData);
-      localStorage.setItem(QUEUED_SUBMISSIONS_KEY, JSON.stringify(queued));
-      alert(t('contactQueuedMessage'));
-      setFormData({ name: '', email: '', message: '', title: '' });
-      setIsSubmitting(false);
-      onClose();
-      return;
-    }
-
     try {
-      await emailjs.send(serviceId, templateId, submissionData, publicKey);
+      // Submit note to Supabase
+      const { error } = await supabase.from('notes').insert([submissionData]);
+
+      if (error) {
+        throw error;
+      }
+
       alert(t('contactSuccessMessage'));
+      setFormData({ name: '', email: '', message: '', title: '' });
+      onClose();
     } catch (error) {
-      console.error('Email send error:', error);
-      alert(t('contactErrorMessage'));
+      console.error('Note submission error:', error);
+
+      // Queue for later when offline or server unavailable
+      if (!isOnline || !isSupabaseConnected) {
+        const queued = JSON.parse(localStorage.getItem(QUEUED_SUBMISSIONS_KEY) || '[]');
+        queued.push(submissionData);
+        localStorage.setItem(QUEUED_SUBMISSIONS_KEY, JSON.stringify(queued));
+
+        alert(t('contactQueuedMessage'));
+      } else {
+        alert(t('contactErrorMessage'));
+      }
+
+      setFormData({ name: '', email: '', message: '', title: '' });
+      onClose();
     }
 
-    setFormData({ name: '', email: '', message: '', title: '' });
     setIsSubmitting(false);
-    onClose();
   };
 
   if (!isVisible) return null;
